@@ -16,7 +16,7 @@ know whether this package might be useful for them.
 
 ## Features
 
-TODO: List what your package can do. Maybe include images, gifs, or videos.
+* 第一阶段工作完成:可以快捷生成copyWith方法
 
 ## Getting started
 
@@ -29,7 +29,23 @@ TODO: Include short and useful examples for package users. Add longer examples
 to `/example` folder.
 
 ```dart
-const like = 'sample';
+import 'package:json_annotation/json_annotation.dart';
+import 'package:mini_data/mini_data.dart';
+
+part 'student.g.dart';
+
+@JsonSerializable()
+@CopyWith()
+class Student {
+  final String name;
+  final int? age;
+  Student({required this.name, this.age});
+  factory Student.fromJson(Map<String, dynamic> json) =>
+      _$StudentFromJson(json);
+
+  Map<String, dynamic> toJson() => _$StudentToJson(this);
+}
+
 ```
 
 ## Additional information
