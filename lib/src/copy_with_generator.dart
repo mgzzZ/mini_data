@@ -1,6 +1,6 @@
 import 'package:analyzer/dart/element/element.dart' show ClassElement, Element;
 import 'package:build/build.dart' show BuildStep;
-import 'package:mini_data/src/copy_with.dart';
+import 'package:mini_data/mini_data.dart';
 import 'package:mini_data/src/field_info.dart';
 import 'package:mini_data/src/helpers.dart';
 import 'package:mini_data/src/settings.dart';

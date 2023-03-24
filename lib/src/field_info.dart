@@ -2,7 +2,7 @@ import 'package:analyzer/dart/constant/value.dart' show DartObject;
 import 'package:analyzer/dart/element/element.dart'
     show ClassElement, FieldElement, ParameterElement;
 import 'package:analyzer/dart/element/nullability_suffix.dart';
-import 'package:mini_data/src/copy_with.dart';
+import 'package:mini_data/mini_data.dart';
 import 'package:mini_data/src/copy_with_field_annotation.dart';
 import 'package:source_gen/source_gen.dart' show ConstantReader, TypeChecker;
 

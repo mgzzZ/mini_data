@@ -1,4 +1,4 @@
-import 'package:mini_data/src/copy_with.dart';
+import 'package:mini_data/mini_data.dart';
 
 class CopyWithFieldAnnotation implements CopyWithField {
   const CopyWithFieldAnnotation({

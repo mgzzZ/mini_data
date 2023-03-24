@@ -1,3 +1,15 @@
+targets:
+  $default:
+    builders:
+      mini_data:
+        enabled: true
+        generate_for:
+          exclude:
+            - test
+            - example
+          include:
+            - test/gen_*
+
 builders:
   mini_data:
     target: ":mini_data"
