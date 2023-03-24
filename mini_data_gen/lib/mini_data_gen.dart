@@ -7,6 +7,7 @@ import 'package:source_gen/source_gen.dart' show PartBuilder, SharedPartBuilder;
 
 Builder copyWith(BuilderOptions config) {
   return PartBuilder(
-      [CopyWithGenerator(Settings.fromConfig(config.config))], '.mini.dart',
-      options: config);
+    [CopyWithGenerator(Settings.fromConfig(config.config))],
+    '.mini.dart',
+  );
 }
