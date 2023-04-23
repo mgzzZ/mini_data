@@ -18,23 +18,33 @@ class MergeGenerator extends GeneratorForAnnotation<MiniDataConfig> {
           'Generator can only be applied to classes.',
           element: element);
     }
-    final classElement = element;
-    final buffer = StringBuffer();
 
-    // 生成 merge 方法
-    buffer.writeln("part of '${buildStep.inputId.pathSegments.last}';");
+    final classElement = element as ClassElement;
+    final className = classElement.name;
 
-    buffer.writeln(
-        'extension _\$${classElement.name}Merge on ${classElement.name} {');
-    buffer.writeln('if (other == null) return this;');
-    buffer.writeln('return copyWith(');
-    buffer.writeAll(
-        classElement.fields
-            .map((field) => '${field.name}: other.${field.name}'),
-        ', ');
-    buffer.writeln(');');
-    buffer.writeln('}');
+    // Generate merge method
+    final mergeMethod = config.generateMerge
+        ? _generateMergeMethod(className, classElement)
+        : '';
 
-    return buffer.toString();
+    return '''
+      $mergeMethod
+    ''';
   }
+}
+
+String _generateMergeMethod(String className, ClassElement classElement) {
+  final fieldsMerging = classElement.fields.map((field) {
+    return '${field.name}: other.${field.name} ?? ${field.name},';
+  }).join('\n');
+
+  return '''
+    extension ${className}Merge on $className {
+      $className merge($className other) {
+        return $className(
+          $fieldsMerging
+        );
+      }
+    }
+  ''';
 }

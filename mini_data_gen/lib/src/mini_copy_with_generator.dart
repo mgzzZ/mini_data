@@ -18,27 +18,75 @@ class CopyWithGenerator extends GeneratorForAnnotation<MiniDataConfig> {
           element: element);
     }
     final classElement = element;
-    final buffer = StringBuffer();
+    final className = classElement.name;
 
-    // 生成 copyWith 方法
-    buffer.writeln("part of '${buildStep.inputId.pathSegments.last}';");
+    // Create builder class name
+    final builderClassName = '_${className}CopyWithBuilder';
 
-    buffer.writeln(
-        'extension _\$${classElement.name}CopyWith on ${classElement.name} {');
-    buffer.writeAll(
-        classElement.fields.map((field) =>
-            '${field.type.getDisplayString(withNullability: true)}? ${field.name}'),
-        ', ');
+    // Generate builder class
+    final builderClass = _generateBuilderClass(builderClassName, classElement);
 
-    buffer.writeln('}) {');
-    buffer.writeln('return ${classElement.name}(');
-    buffer.writeAll(
-        classElement.fields.map(
-            (field) => '${field.name}: ${field.name} ?? this.${field.name}'),
-        ', ');
-    buffer.writeln(');');
-    buffer.writeln('}');
+    // Generate copyWithBuilder method
+    final copyWithBuilderMethod = config.generateCopyWith
+        ? _generateCopyWithBuilderMethod(builderClassName, className)
+        : '';
 
-    return buffer.toString();
+    return '''
+      $builderClass
+      
+      $copyWithBuilderMethod
+    ''';
   }
+}
+
+String _generateBuilderClass(
+    String builderClassName, ClassElement classElement) {
+  final fieldsDeclarations = classElement.fields.map((field) {
+    return '${field.type.getDisplayString(withNullability: true)}? ${field.name};';
+  }).join('\n');
+
+  final copyConstructor = '''
+    $builderClassName.from$builderClassName($builderClassName builder) {
+      ${classElement.fields.map((field) => '${field.name} = builder.${field.name};').join('\n')}
+    }
+  ''';
+
+  final fromClassConstructor = '''
+    $builderClassName.from${classElement.name}(${classElement.name} instance) {
+      ${classElement.fields.map((field) => '${field.name} = instance.${field.name};').join('\n')}
+    }
+  ''';
+
+  final buildMethod = '''
+    ${classElement.name} build() {
+      return ${classElement.name}(
+        ${classElement.fields.map((field) => '${field.name}: ${field.name}!,'.trim()).join('\n')}
+      );
+    }
+  ''';
+
+  return '''
+    class $builderClassName {
+      $fieldsDeclarations
+      
+      $builderClassName();
+      
+      $copyConstructor
+      
+      $fromClassConstructor
+      
+      $buildMethod
+    }
+  ''';
+}
+
+String _generateCopyWithBuilderMethod(
+    String builderClassName, String className) {
+  return '''
+    extension ${className}CopyWithBuilder on $className {
+      $builderClassName copyWithBuilder() {
+        return $builderClassName.from${className}(this);
+      }
+    }
+  ''';
 }

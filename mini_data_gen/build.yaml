@@ -11,15 +11,25 @@ targets:
             - test/gen_*
 
 builders:
-  copy_with:
+  mini_copy_with:
     import: "package:mini_data_gen/mini_data_gen.dart"
-    builder_factories: [ "copyWithBuilder" ]
-    build_extensions: { ".dart": [ ".copy_with.g.dart" ] }
+    builder_factories: [ "CopyWithGenerator" ]
+    build_extensions: { ".dart": [ ".g.dart" ] }
     auto_apply: dependents
     build_to: cache
-  merge:
+    defaults:
+      generate_for:
+        include:
+          - lib/**/*.dart
+      options: { }
+  mini_merge:
     import: "package:mini_data_gen/mini_data_gen.dart"
-    builder_factories: [ "mergeBuilder" ]
-    build_extensions: { ".dart": [ ".merge.g.dart" ] }
+    builder_factories: [ "MergeGenerator" ]
+    build_extensions: { ".dart": [ ".g.dart" ] }
     auto_apply: dependents
     build_to: cache
+    defaults:
+      generate_for:
+        include:
+          - lib/**/*.dart
+      options: { }
