@@ -19,3 +19,16 @@ builders:
     auto_apply: dependents
     build_to: cache
     applies_builders: ["source_gen|combining_builder"]
+
+  copy_with:
+    import: "package:mini_data_gen/src/mini_copy_with_generator.dart"
+    builder_factories: [ "copyWithBuilder" ]
+    build_extensions: { ".dart": [ ".copy_with.g.dart" ] }
+    auto_apply: dependents
+    build_to: cache
+  merge:
+    import: "package:mini_data_gen/src/mini_merge_generator.dart"
+    builder_factories: [ "mergeBuilder" ]
+    build_extensions: { ".dart": [ ".merge.g.dart" ] }
+    auto_apply: dependents
+    build_to: cache
