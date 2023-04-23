@@ -13,8 +13,8 @@ targets:
 builders:
   mini_copy_with:
     import: "package:mini_data_gen/mini_data_gen.dart"
-    builder_factories: [ "CopyWithGenerator" ]
-    build_extensions: { ".dart": [ ".g.dart" ] }
+    builder_factories: ["CopyWithGenerator"]
+    build_extensions: { ".dart": [".g.dart"] }
     auto_apply: dependents
     build_to: cache
     defaults:
@@ -24,8 +24,8 @@ builders:
       options: { }
   mini_merge:
     import: "package:mini_data_gen/mini_data_gen.dart"
-    builder_factories: [ "MergeGenerator" ]
-    build_extensions: { ".dart": [ ".g.dart" ] }
+    builder_factories: ["MergeGenerator"]
+    build_extensions: { ".dart": [".g.dart"] }
     auto_apply: dependents
     build_to: cache
     defaults:
