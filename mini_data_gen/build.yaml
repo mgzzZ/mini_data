@@ -2,34 +2,14 @@ targets:
   $default:
     builders:
       mini_data_gen:
-        enabled: true
-        generate_for:
-          exclude:
-            - test
-            - example
-          include:
-            - test/gen_*
+        options:
+          generate_copy_with: true
+          generate_merge: true
 
 builders:
-  mini_copy_with:
+  mini_data_gen:
     import: "package:mini_data_gen/mini_data_gen.dart"
-    builder_factories: ["CopyWithGenerator"]
-    build_extensions: { ".dart": [".g.dart"] }
+    builder_factories: ["createCopyWithBuilder", "createMergeBuilder"]
+    build_extensions: {".dart": [".copy_with.g.dart", ".merge.g.dart"]}
     auto_apply: dependents
-    build_to: cache
-    defaults:
-      generate_for:
-        include:
-          - lib/**/*.dart
-      options: { }
-  mini_merge:
-    import: "package:mini_data_gen/mini_data_gen.dart"
-    builder_factories: ["MergeGenerator"]
-    build_extensions: { ".dart": [".g.dart"] }
-    auto_apply: dependents
-    build_to: cache
-    defaults:
-      generate_for:
-        include:
-          - lib/**/*.dart
-      options: { }
+    is_optional: true
