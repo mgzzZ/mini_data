@@ -20,77 +20,33 @@ class CopyWithGenerator extends GeneratorForAnnotation<MiniDataConfig> {
     final classElement = element;
     final className = classElement.name;
 
-    // Create builder class name
-    final builderClassName = '_${className}CopyWithBuilder';
-
-    // Generate builder class
-    final builderClass = _generateBuilderClass(builderClassName, classElement);
-
-    // Generate copyWithBuilder method
-    final copyWithBuilderMethod = config.generateCopyWith
-        ? _generateCopyWithBuilderMethod(builderClassName, className)
-        : '';
+    final copyWithMethod = _generateCopyWithMethod(classElement);
 
     return '''
-      $builderClass
-      
-      $copyWithBuilderMethod
+      extension ${className}CopyWith on $className {
+        $copyWithMethod
+      }
     ''';
   }
-}
 
-String _generateBuilderClass(
-    String builderClassName, ClassElement classElement) {
-  final fieldsDeclarations = classElement.fields.map((field) {
-    return '${field.type.getDisplayString(withNullability: true)} ${field.name};';
-  }).join('\n');
+  String _generateCopyWithMethod(ClassElement classElement) {
+    final className = classElement.name;
 
-  final copyConstructor = '''
-    $builderClassName.from$builderClassName($builderClassName builder) {
-      ${classElement.fields.map((field) => '${field.name} = builder.${field.name};').join('\n')}
-    }
-  ''';
+    final namedParameters = classElement.fields.map((field) {
+      final type = field.type.getDisplayString(withNullability: false);
+      final name = field.name;
+      return '$type? $name';
+    }).join(', ');
 
-  final fromClassConstructor = '''
-    $builderClassName.from${classElement.name}(${classElement.name} instance) {
-      ${classElement.fields.map((field) => '${field.name} = instance.${field.name};').join('\n')}
-    }
-  ''';
+    final copyWithParams = classElement.fields.map((field) {
+      final name = field.name;
+      return '$name: $name ?? this.$name';
+    }).join(', ');
 
-  final buildMethod = '''
-    ${classElement.name} build() {
-      return ${classElement.name}(
-        ${classElement.fields.map((field) => '${field.name}: ${field.name}!,'.trim()).join('\n')}
-      );
-    }
-  ''';
-
-  String code = '''
-    class $builderClassName {
-      $fieldsDeclarations
-      
-      $builderClassName();
-      
-      $copyConstructor
-      
-      $fromClassConstructor
-      
-      $buildMethod
-    }
-  ''';
-  print('-----');
-  print(code);
-  print('-----');
-  return code;
-}
-
-String _generateCopyWithBuilderMethod(
-    String builderClassName, String className) {
-  return '''
-    extension ${className}CopyWithBuilder on $className {
-      $builderClassName copyWithBuilder() {
-        return $builderClassName.from${className}(this);
+    return '''
+      $className copyWith({$namedParameters}) {
+        return $className($copyWithParams);
       }
-    }
-  ''';
+    ''';
+  }
 }
