@@ -10,6 +10,6 @@ builders:
   mini_data_gen:
     import: "package:mini_data_gen/mini_data_gen.dart"
     builder_factories: ["createCopyWithBuilder", "createMergeBuilder"]
-    build_extensions: {".dart": [".g.dart", ".g.dart"]}
+    build_extensions: {".dart": [".g.dart"]}
     auto_apply: dependents
     is_optional: true
