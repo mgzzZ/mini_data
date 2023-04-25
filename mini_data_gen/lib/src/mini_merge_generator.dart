@@ -19,7 +19,7 @@ class MergeGenerator extends GeneratorForAnnotation<MiniDataConfig> {
           element: element);
     }
 
-    final classElement = element as ClassElement;
+    final classElement = element;
     final className = classElement.name;
 
     // Generate merge method

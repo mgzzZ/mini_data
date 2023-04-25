@@ -42,7 +42,7 @@ class CopyWithGenerator extends GeneratorForAnnotation<MiniDataConfig> {
 String _generateBuilderClass(
     String builderClassName, ClassElement classElement) {
   final fieldsDeclarations = classElement.fields.map((field) {
-    return '${field.type.getDisplayString(withNullability: true)}? ${field.name};';
+    return '${field.type.getDisplayString(withNullability: true)} ${field.name};';
   }).join('\n');
 
   final copyConstructor = '''
