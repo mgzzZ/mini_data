@@ -65,7 +65,7 @@ String _generateBuilderClass(
     }
   ''';
 
-  return '''
+  String code = '''
     class $builderClassName {
       $fieldsDeclarations
       
@@ -78,6 +78,10 @@ String _generateBuilderClass(
       $buildMethod
     }
   ''';
+  print('-----');
+  print(code);
+  print('-----');
+  return code;
 }
 
 String _generateCopyWithBuilderMethod(
