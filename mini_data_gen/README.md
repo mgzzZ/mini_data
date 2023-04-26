@@ -2,7 +2,7 @@
 
 ## Features
 
-* 第一阶段工作完成:可以快捷生成copyWith方法
+* 第一阶段工作完成:可以快捷生成copyWith, merge方法
 
 ## Getting started
 
@@ -34,7 +34,7 @@ import 'package:mini_data/mini_data.dart';
 part 'student.g.dart';
 
 @JsonSerializable()
-@CopyWith()
+@MiniDataConfig(generateCopyWith: true, generateMerge: true)
 class Student {
   final String name;
   final int? age;
@@ -44,6 +44,43 @@ class Student {
 
   Map<String, dynamic> toJson() => _$StudentToJson(this);
 }
+
+
+TEST
+
+group('Student copyWith', () {
+    test('copyWith should change name', () {
+        final student = Student(name: 'Alice', age: 18);
+        final updatedStudent = student.copyWith(name: 'Bob');
+        
+        expect(updatedStudent.name, 'Bob');
+        expect(updatedStudent.age, student.age);
+    });
+    
+    test('copyWith should change age', () {
+        final student = Student(name: 'Alice', age: 18);
+        final updatedStudent = student.copyWith(age: 21);
+        
+        expect(updatedStudent.name, student.name);
+        expect(updatedStudent.age, 21);
+    });
+    
+    test('copyWith should change name and age', () {
+        final student = Student(name: 'Alice', age: 18);
+        final updatedStudent = student.copyWith(name: 'Bob', age: 21);
+        
+        expect(updatedStudent.name, 'Bob');
+        expect(updatedStudent.age, 21);
+    });
+    
+    test('copyWith should not change any property', () {
+        final student = Student(name: 'Alice', age: 18);
+        final updatedStudent = student.copyWith();
+        
+        expect(updatedStudent.name, student.name);
+        expect(updatedStudent.age, student.age);
+    });
+}); 
 
 ```
 

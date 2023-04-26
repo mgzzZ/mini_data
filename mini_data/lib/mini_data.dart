@@ -2,8 +2,8 @@ library mini_data;
 
 class MiniDataConfig {
   const MiniDataConfig({
-    required this.generateCopyWith,
-    required this.generateMerge,
+    this.generateCopyWith = true,
+    this.generateMerge = true,
   });
   final bool generateCopyWith;
   final bool generateMerge;
