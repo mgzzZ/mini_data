@@ -1,3 +1,3 @@
 # mini_data
-- [x]copyWith
-- [x]merge
+-[x] copyWith
+-[x] merge
