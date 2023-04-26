@@ -12,10 +12,8 @@ targets:
 
 builders:
   mini_data_gen:
-    target: ":mini_data_gen"
     import: "package:mini_data_gen/mini_data_gen.dart"
-    builder_factories: ["copyWith"]
-    build_extensions: {".dart": ["copy_with_extension_gen.g.part"]}
+    builder_factories: ["createCopyWithBuilder","createMergeBuilder"]
+    build_extensions: {".dart": [".g.dart"] }
     auto_apply: dependents
-    build_to: cache
-    applies_builders: ["source_gen|combining_builder"]
+    is_optional: true
