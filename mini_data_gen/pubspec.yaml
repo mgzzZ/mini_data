@@ -16,6 +16,7 @@ dependencies:
   mini_data:
     git:
       url: https://github.com/mgzzZ/mini_data.git
+      ref: dev
       path: mini_data
 dev_dependencies:
   flutter_test:
