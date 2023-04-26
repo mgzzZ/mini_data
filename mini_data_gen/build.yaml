@@ -2,14 +2,18 @@ targets:
   $default:
     builders:
       mini_data_gen:
-        options:
-          generate_copy_with: true
-          generate_merge: true
+        enabled: true
+        generate_for:
+          exclude:
+            - test
+            - example
+          include:
+            - test/gen_*
 
 builders:
   mini_data_gen:
     import: "package:mini_data_gen/mini_data_gen.dart"
-    builder_factories: ["createCopyWithBuilder", "createMergeBuilder"]
-    build_extensions: {".dart": [".g.dart"]}
+    builder_factories: ["createCopyWithBuilder","createMergeBuilder"]
+    build_extensions: {".dart": [".g.dart"] }
     auto_apply: dependents
     is_optional: true
