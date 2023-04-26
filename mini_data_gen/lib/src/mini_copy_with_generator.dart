@@ -1,9 +1,10 @@
 import 'dart:async';
 
-import 'package:analyzer/dart/element/element.dart';
-import 'package:build/build.dart';
+import 'package:analyzer/dart/element/element.dart' show ClassElement, Element;
+import 'package:build/build.dart' show BuildStep;
 import 'package:mini_data_gen/src/config.dart';
-import 'package:source_gen/source_gen.dart';
+import 'package:source_gen/source_gen.dart'
+    show ConstantReader, GeneratorForAnnotation, InvalidGenerationSourceError;
 
 class CopyWithGenerator extends GeneratorForAnnotation<MiniDataConfig> {
   @override
